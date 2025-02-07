@@ -1,0 +1,4 @@
+rootProject.name = 'm7r-mailer'
+
+apply from: "../../infra/m7r-common-config/libs.gradle"
+

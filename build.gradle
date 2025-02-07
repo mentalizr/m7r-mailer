@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+}
+
+group 'org.mentalizr'
+version '0.0.1-SNAPSHOT'
+
+repositories {
+    maven { url "https://raw.githubusercontent.com/arthurpicht/mvn-repo/main/releases"}
+    mavenCentral()
+}
+
+dependencies {
+    implementation libs.m7r.commons
+
+    implementation libs.ap.utils.core
+    implementation libs.ap.utils.io
+    implementation libs.ap.configuration
+
+    implementation libs.eclipse.angusMail
+
+    testImplementation libs.junit.jupiter
+    testRuntimeOnly libs.junit.engine
+}
+
+test {
+    useJUnitPlatform()
+}
