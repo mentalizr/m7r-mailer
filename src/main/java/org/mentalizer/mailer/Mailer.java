@@ -17,7 +17,11 @@ import java.util.Properties;
 
 public class Mailer {
 
-    public static void sendPlainTextMail(String subject, String text, List<String> recipients, MailConfiguration mailConfiguration)
+    public static void sendPlainTextMail(
+            String subject,
+            String text,
+            List<String> recipients,
+            MailConfiguration mailConfiguration)
             throws MailerException {
 
         if (recipients.isEmpty()) return;
@@ -28,7 +32,11 @@ public class Mailer {
     }
 
     public static void sendMimeMultipartMailWithAttachment(
-            String subject, String textBody, List<String> recipients, Path attachmentPath, MailConfiguration mailConfiguration)
+            String subject,
+            String textBody,
+            List<String> recipients,
+            Path attachmentPath,
+            MailConfiguration mailConfiguration)
             throws MailerException {
 
         if (recipients.isEmpty()) return;

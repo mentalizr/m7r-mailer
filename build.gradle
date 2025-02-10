@@ -20,7 +20,7 @@ dependencies {
     implementation libs.eclipse.angusMail
 
     testImplementation libs.junit.jupiter
-    testRuntimeOnly libs.junit.engine
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 test {
