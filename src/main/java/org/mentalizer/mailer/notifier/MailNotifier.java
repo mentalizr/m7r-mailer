@@ -3,7 +3,16 @@ package org.mentalizer.mailer.notifier;
 import org.mentalizer.mailer.Mailer;
 import org.mentalizer.mailer.MailerException;
 
+@SuppressWarnings("unused")
 public class MailNotifier {
+
+    public static void sendNotification(String subject, String text) {
+        sendNotification(new MailNotification(subject, text));
+    }
+
+    public static void sendNotification(String subject, String text, MailNotifierCallback callback) {
+        sendNotification(new MailNotification(subject, text), callback);
+    }
 
     public static void sendNotification(MailNotification mailNotification) {
         sendNotification(mailNotification, null);

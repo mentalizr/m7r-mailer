@@ -11,24 +11,7 @@ public class MailNotification {
     private final List<String> recipients;
     private final MailConfiguration mailConfiguration;
 
-    public static class Builder {
-
-        private String subject = "";
-        private String text = "";
-
-        public Builder withSubject(String subject) {
-            this.subject = subject;
-            return this;
-        }
-
-        public Builder withText(String text) {
-            this.text = text;
-            return this;
-        }
-
-    }
-
-    private MailNotification(
+    public MailNotification(
             String subject,
             String text
     ) {
