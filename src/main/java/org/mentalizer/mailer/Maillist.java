@@ -38,7 +38,6 @@ public class Maillist {
 
     private static void validate(List<String> recipients) throws MailerException {
         for (String recipient : recipients) {
-            System.out.println("Validating recipient [" + recipient + "]");
             try {
                 new InternetAddress(recipient).validate();
             } catch (AddressException e) {

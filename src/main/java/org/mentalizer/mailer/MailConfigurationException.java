@@ -1,5 +1,6 @@
 package org.mentalizer.mailer;
 
+@SuppressWarnings("unused")
 public class MailConfigurationException extends Exception {
 
     public MailConfigurationException() {

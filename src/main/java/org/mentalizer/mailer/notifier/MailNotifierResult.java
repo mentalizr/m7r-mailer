@@ -1,5 +1,6 @@
 package org.mentalizer.mailer.notifier;
 
+@SuppressWarnings("unused")
 public class MailNotifierResult {
 
     private final MailNotification mailNotification;
