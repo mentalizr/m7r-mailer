@@ -1,5 +1,6 @@
 package org.mentalizer.mailer.notifier;
 
+import de.arthurpicht.utils.core.system.SystemUtils;
 import org.mentalizer.mailer.Mailer;
 import org.mentalizer.mailer.MailerException;
 import org.mentalizer.mailer.notifier.NotificationSum.LimitStatus;
@@ -56,19 +57,11 @@ public class MailNotifier {
 
     private static void sendLimitExceededNotification(MailNotifierCallback callback) {
         MailNotification notification = new MailNotification(
-                "[" + getHostname() + "] Daily notification limit reached.\n",
-                "Maximum number of notifications per day is reached for system [" + getHostname() + "].\n"
+                "[" + SystemUtils.getHostname() + "] Daily notification limit reached.\n",
+                "Maximum number of notifications per day is reached for system [" + SystemUtils.getHostname() + "].\n"
                         + "No further notifications will be sent today.\n"
                         + "Please see log files for more details.");
         sendMail(notification, callback);
-    }
-
-    private static String getHostname() {
-        try {
-            return InetAddress.getLocalHost().getHostName();
-        } catch (UnknownHostException e) {
-            return "UNKNOWN";
-        }
     }
 
 }
