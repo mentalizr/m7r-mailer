@@ -17,6 +17,12 @@ import java.util.Properties;
 
 public class Mailer {
 
+    public static class MailerException extends Exception {
+        public MailerException(String message, Throwable cause) {
+            super(message, cause);
+        }
+    }
+
     public static void sendPlainTextMail(
             String subject,
             String text,

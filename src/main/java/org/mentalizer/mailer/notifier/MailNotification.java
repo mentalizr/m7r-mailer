@@ -6,15 +6,21 @@ import java.util.List;
 
 public class MailNotification {
 
+    public static class MailNotificationRuntimeException extends RuntimeException {
+        public MailNotificationRuntimeException(String message, Throwable cause) {
+            super(message, cause);
+        }
+    }
+
     private final String subject;
     private final String text;
     private final List<String> recipients;
     private final MailConfiguration mailConfiguration;
 
-    public MailNotification(
+    public MailNotification (
             String subject,
             String text
-    ) {
+    ) throws MailNotificationRuntimeException {
 
         if (subject == null || subject.isEmpty())
             throw new IllegalArgumentException("subject cannot be null or empty.");
@@ -46,8 +52,8 @@ public class MailNotification {
     private List<String> readMaillist() {
         try {
             return Maillist.read(new M7rNotificationRecipientsFile().asPath());
-        } catch (MailerException e) {
-            throw new NotifierRuntimeException(e);
+        } catch (Maillist.MaillistException e) {
+            throw new MailNotificationRuntimeException(e.getMessage(), e);
         }
     }
 
@@ -55,7 +61,7 @@ public class MailNotification {
         try {
             return MailConfigurationLoader.load();
         } catch (MailConfigurationException e) {
-            throw new NotifierRuntimeException(e);
+            throw new MailNotificationRuntimeException(e.getMessage(), e);
         }
     }
 

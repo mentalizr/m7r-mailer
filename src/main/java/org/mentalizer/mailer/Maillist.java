@@ -12,9 +12,18 @@ import java.util.stream.Collectors;
 
 public class Maillist {
 
-    public static List<String> read(Path maillistFile) throws MailerException {
+    public static class MaillistException extends Exception {
+        public MaillistException(String message) {
+            super(message);
+        }
+        public MaillistException(String message, Throwable cause) {
+            super(message, cause);
+        }
+    }
+
+    public static List<String> read(Path maillistFile) throws MaillistException {
         if (!FileUtils.isExistingRegularFile(maillistFile))
-            throw new MailerException("Mail list file not found: [" + maillistFile.toAbsolutePath() + "].");
+            throw new MaillistException("Mail list file not found: [" + maillistFile.toAbsolutePath() + "].");
 
         List<String> recipients = readFromFile(maillistFile);
         validate(recipients);
@@ -22,7 +31,7 @@ public class Maillist {
         return recipients;
     }
 
-    private static List<String> readFromFile(Path maillistFile) throws MailerException {
+    private static List<String> readFromFile(Path maillistFile) throws MaillistException {
         try {
             return TextFileUtils
                     .readNonCommentedLinesAsStrings(maillistFile, "#")
@@ -31,17 +40,17 @@ public class Maillist {
                     .filter(s -> !s.isEmpty())
                     .collect(Collectors.toList());
         } catch (IOException e) {
-            throw new MailerException("Could not read mail list file [" + maillistFile.toAbsolutePath() + "]: "
+            throw new MaillistException("Could not read mail list file [" + maillistFile.toAbsolutePath() + "]: "
                                        + e.getMessage(), e);
         }
     }
 
-    private static void validate(List<String> recipients) throws MailerException {
+    private static void validate(List<String> recipients) throws MaillistException {
         for (String recipient : recipients) {
             try {
                 new InternetAddress(recipient).validate();
             } catch (AddressException e) {
-                throw new MailerException("Invalid format of email address: [" + recipient + "].");
+                throw new MaillistException("Invalid format of email address: [" + recipient + "].");
             }
         }
     }

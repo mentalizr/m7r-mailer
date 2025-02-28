@@ -2,11 +2,7 @@ package org.mentalizer.mailer.notifier;
 
 import de.arthurpicht.utils.core.system.SystemUtils;
 import org.mentalizer.mailer.Mailer;
-import org.mentalizer.mailer.MailerException;
 import org.mentalizer.mailer.notifier.NotificationSum.LimitStatus;
-
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 @SuppressWarnings("unused")
 public class MailNotifier {
@@ -45,7 +41,7 @@ public class MailNotifier {
                     MailNotifierResult result = new MailNotifierResult(mailNotification);
                     callback.onSuccess(result);
                 }
-            } catch (MailerException | RuntimeException e) {
+            } catch (Mailer.MailerException | RuntimeException e) {
                 if (callback != null) {
                     MailNotifierResult result = new MailNotifierResult(mailNotification, e);
                     callback.onFailure(result);
