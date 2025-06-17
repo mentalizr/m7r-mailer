@@ -1,8 +1,11 @@
 package org.mentalizer.mailer.notifier;
 
 import de.arthurpicht.utils.core.system.SystemUtils;
+import de.arthurpicht.utils.io.maxExecutionLimiter.MaxExecutionLimiter;
+import de.arthurpicht.utils.io.maxExecutionLimiter.MaxExecutionLimiterException;
+import de.arthurpicht.utils.io.maxExecutionLimiter.MaxExecutionLimiters;
+import de.arthurpicht.utils.io.maxExecutionLimiter.Permission;
 import org.mentalizer.mailer.Mailer;
-import org.mentalizer.mailer.notifier.NotificationSum.LimitStatus;
 
 @SuppressWarnings("unused")
 public class MailNotifier {
@@ -20,12 +23,15 @@ public class MailNotifier {
     }
 
     public static void sendNotification(MailNotification mailNotification, MailNotifierCallback callback) {
-        LimitStatus limitStatus = NotificationSum.getLimitStatus();
-        if (limitStatus == LimitStatus.BELOW_LIMIT) {
+        MaxExecutionLimiter maxExecutionLimiter
+                = MaxExecutionLimiters.perDay(7, new M7rSentNotificationsFile().asPath());
+        try {
+            Permission permission = maxExecutionLimiter.requestExecutionPermission();
             sendMail(mailNotification, callback);
-        } else if (limitStatus == LimitStatus.ON_LIMIT) {
-            sendMail(mailNotification, callback);
-            sendLimitExceededNotification(callback);
+            if (permission.isMaxExecutionReached())
+                sendLimitExceededNotification(callback);
+        } catch (MaxExecutionLimiterException e) {
+            // din
         }
     }
 
