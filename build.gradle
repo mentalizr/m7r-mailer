@@ -2,11 +2,11 @@ plugins {
     id 'java'
 }
 
-group 'org.mentalizr'
-version '0.0.1-SNAPSHOT'
+group = 'org.mentalizr'
+version = '0.0.1-SNAPSHOT'
 
 repositories {
-    maven { url "https://raw.githubusercontent.com/arthurpicht/mvn-repo/main/releases"}
+    maven { url = "https://raw.githubusercontent.com/arthurpicht/mvn-repo/main/releases"}
     mavenCentral()
 }
 
